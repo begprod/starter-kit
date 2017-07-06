@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/begprod/Starter-Kit.git"
   },
-  "author": "Andrey Aratov",
+  "author": "Andrey Aratov [web.andrew@yandex.ru]",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/begprod/Starter-Kit/issues"
@@ -20,6 +20,7 @@
     "browser-sync": "^2.18.12",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",
+    "gulp-rigger": "^0.5.8",
     "gulp-sass": "^3.1.0",
     "gulp-watch": "^4.3.11"
   }
