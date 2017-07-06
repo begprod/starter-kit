@@ -1,0 +1,26 @@
+{
+  "name": "starter-kit",
+  "version": "1.0.0",
+  "description": "Starter kit for simple projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/begprod/Starter-Kit.git"
+  },
+  "author": "Andrey Aratov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/begprod/Starter-Kit/issues"
+  },
+  "homepage": "https://github.com/begprod/Starter-Kit#readme",
+  "devDependencies": {
+    "browser-sync": "^2.18.12",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-watch": "^4.3.11"
+  }
+}
