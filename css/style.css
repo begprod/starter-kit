@@ -1,13 +1,1 @@
-html {
-  box-sizing: border-box;
-}
-
-*,
-*::after,
-*::before {
-  box-sizing: inherit;
-}
-
-.test {
-  color: red;
-}
+html{-webkit-box-sizing:border-box;box-sizing:border-box}*,*::after,*::before{-webkit-box-sizing:inherit;box-sizing:inherit}
