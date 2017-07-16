@@ -3,6 +3,7 @@ var gulp = require('gulp');
 var watch = require('gulp-watch');
 var sass = require('gulp-sass');
 var prefixer = require('gulp-autoprefixer');
+var uglify = require('gulp-uglify');
 var rigger = require('gulp-rigger');
 // For server
 var browserSync = require('browser-sync');
@@ -13,15 +14,18 @@ var	reload = browserSync.reload;
 var path = {
 	build: { // Where
 		html: './',
-		css: './css/'
+		css: './css/',
+		js: './js/'
 	},
 	src: { // From
 		html: './html/*.html',
-		css: './css/style.sass'
+		css: './css/style.sass',
+		js: './js/partials/*.js'
 	},
 	watch: {// Watching for changes
 		html: './html/**/*.html',
-		css: './css/**/*.sass'
+		css: './css/**/*.sass',
+		js: './js/partials/*.js'
 	}
 }
 
@@ -61,9 +65,19 @@ gulp.task('MakeCssGreatAgain', function() {
 });
 
 
+gulp.task('MakeJsGreatAgain', function() {
+	gulp.src(path.src.js)
+		.pipe(uglify())
+		.pipe(gulp.dest(path.build.js))
+		.pipe(reload({
+			stream: true
+		}));
+});
+
 gulp.task('MakeProjectGreatAgain', [
 	'MakeHTMLGreatAgain',
-	'MakeCssGreatAgain'
+	'MakeCssGreatAgain',
+	'MakeJsGreatAgain'
 ]);
 
 
@@ -73,6 +87,9 @@ gulp.task('watch', function() {
 	});
 	watch([path.watch.css], function(event, cb) {
 		gulp.start('MakeCssGreatAgain');
+	});
+	watch([path.watch.js], function(event, cb) {
+		gulp.start('MakeJsGreatAgain');
 	});
 });
 
