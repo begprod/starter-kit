@@ -5,6 +5,7 @@ var sass = require('gulp-sass');
 var prefixer = require('gulp-autoprefixer');
 var uglify = require('gulp-uglify');
 var rigger = require('gulp-rigger');
+var csso = require('gulp-csso');
 // For server
 var browserSync = require('browser-sync');
 var	reload = browserSync.reload;
@@ -57,6 +58,7 @@ gulp.task('MakeCssGreatAgain', function() {
 		.pipe(sass({
 			outputStyle: 'compressed'
 		})).on('error', sass.logError)
+		.pipe(csso())
 		.pipe(prefixer())
 		.pipe(gulp.dest(path.build.css))
 		.pipe(reload({
