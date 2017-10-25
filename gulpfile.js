@@ -15,9 +15,9 @@ var	reload = browserSync.reload;
 //Project paths
 var path = {
 	build: { // Where
-		html: './',
-		css: './css/',
-		js: './js/'
+		html: './build',
+		css: './build/css',
+		js: './build/js'
 	},
 	src: { // From
 		html: './html/*.html',
@@ -34,7 +34,7 @@ var path = {
 
 var serverConfig = {
 	server: {
-	    baseDir: "./"
+		baseDir: "./"
 	},
 	tunnel: true,
 	host: 'localhost',
