@@ -24,7 +24,7 @@ var path = {
 		css: './css/style.sass',
 		js: './js/partials/*.js'
 	},
-	watch: {// Watching for changes
+	watch: { // Watching for changes
 		html: './html/**/*.html',
 		css: './css/**/*.sass',
 		js: './js/partials/*.js'
@@ -34,7 +34,7 @@ var path = {
 
 var serverConfig = {
 	server: {
-		baseDir: "./"
+		baseDir: "./build"
 	},
 	tunnel: true,
 	host: 'localhost',
