@@ -1,38 +1,43 @@
 // Gulp Plugins
-var gulp = require('gulp');
-var watch = require('gulp-watch');
-var sass = require('gulp-sass');
-var prefixer = require('gulp-autoprefixer');
-var uglify = require('gulp-uglify');
-var rigger = require('gulp-rigger');
-var csso = require('gulp-csso');
-var plumber = require('gulp-plumber');
+const gulp = require('gulp');
+const watch = require('gulp-watch');
+const sass = require('gulp-sass');
+const prefixer = require('gulp-autoprefixer');
+const uglify = require('gulp-uglify');
+const rigger = require('gulp-rigger');
+const csso = require('gulp-csso');
+const plumber = require('gulp-plumber');
+const imagemin = require('gulp-imagemin');
+const pngquant = require('imagemin-pngquant');
 // For server
-var browserSync = require('browser-sync');
-var	reload = browserSync.reload;
+const browserSync = require('browser-sync');
+const	reload = browserSync.reload;
 
 
 //Project paths
-var path = {
+const path = {
 	build: { // Where
 		html: './build',
 		css: './build/css',
-		js: './build/js'
+		js: './build/js',
+		img: './build/images'
 	},
 	src: { // From
 		html: './html/*.html',
 		css: './css/style.sass',
-		js: './js/partials/*.js'
+		js: './js/partials/*.js',
+		img: './images/**/*.*'
 	},
 	watch: { // Watching for changes
 		html: './html/**/*.html',
 		css: './css/**/*.sass',
-		js: './js/partials/*.js'
+		js: './js/partials/*.js',
+		img: './images/**/*.*'
 	}
 }
 
 
-var serverConfig = {
+const serverConfig = {
 	server: {
 		baseDir: "./build"
 	},
@@ -44,7 +49,7 @@ var serverConfig = {
 
 
 //Tasks
-gulp.task('MakeHTMLGreatAgain', function() {
+gulp.task('MakeHTMLGreatAgain', () => {
 	gulp.src(path.src.html)
 		.pipe(rigger())
 		.pipe(gulp.dest(path.build.html))
@@ -54,7 +59,7 @@ gulp.task('MakeHTMLGreatAgain', function() {
 });
 
 
-gulp.task('MakeCssGreatAgain', function() {
+gulp.task('MakeCssGreatAgain', () => {
 	gulp.src(path.src.css)
 		.pipe(sass({
 			outputStyle: 'compressed'
@@ -68,7 +73,7 @@ gulp.task('MakeCssGreatAgain', function() {
 });
 
 
-gulp.task('MakeJsGreatAgain', function() {
+gulp.task('MakeJsGreatAgain', () => {
 	gulp.src(path.src.js)
 		.pipe(plumber())
 		.pipe(uglify())
@@ -78,14 +83,29 @@ gulp.task('MakeJsGreatAgain', function() {
 		}));
 });
 
+gulp.task('MakeImgGreatAgain', () => {
+	gulp.src(path.src.img)
+	.pipe(imagemin({ 
+		progressive: true,
+		svgoPlugins: [{removeViewBox: false}],
+		use: [pngquant()],
+		interlaced: true
+	}))
+	.pipe(gulp.dest(path.build.img))
+	.pipe(reload({
+		stream: true
+	}));
+});
+
 gulp.task('MakeProjectGreatAgain', [
 	'MakeHTMLGreatAgain',
 	'MakeCssGreatAgain',
-	'MakeJsGreatAgain'
+	'MakeJsGreatAgain',
+	'MakeImgGreatAgain'
 ]);
 
 
-gulp.task('watch', function() {
+gulp.task('watch', () => {
 	watch([path.watch.html], function(event, cb) {
 		gulp.start('MakeHTMLGreatAgain');
 	});
@@ -95,10 +115,13 @@ gulp.task('watch', function() {
 	watch([path.watch.js], function(event, cb) {
 		gulp.start('MakeJsGreatAgain');
 	});
+	watch([path.watch.img], function(event, cb) {
+		gulp.start('MakeImgGreatAgain');
+	});
 });
 
 
-gulp.task('webserver', function() {
+gulp.task('webserver', () => {
 	browserSync(serverConfig);
 });
 
