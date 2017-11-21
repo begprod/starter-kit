@@ -11,7 +11,7 @@ const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
 // For server
 const browserSync = require('browser-sync');
-const	reload = browserSync.reload;
+const reload = browserSync.reload;
 
 
 //Project paths
