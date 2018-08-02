@@ -9,7 +9,7 @@ const csso = require('gulp-csso');
 const plumber = require('gulp-plumber');
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
-// For server
+// Server
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
 
