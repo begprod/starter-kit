@@ -1,2 +1,7 @@
-# Gulp starter kit (sass/rigger)
-Starter kit for simple projects
+# Gulp 4 starter kit
+
+### Compiles and hot-reloads
+
+```sh
+npm run build || gulp
+```

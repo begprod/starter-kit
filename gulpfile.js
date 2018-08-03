@@ -23,25 +23,25 @@ const path = {
 		img: './build/images'
 	},
 	src: { // From
-		html: './html/*.html',
-		css: './css/style.sass',
-		js: './js/partials/*.js',
-		img: './images/**/*.*'
+		html: './src/html/*.html',
+		css: './src/css/style.sass',
+		js: './src/js/partials/*.js',
+		img: './src/images/**/*.*'
 	},
 	watch: { // Watching for changes
-		html: './html/**/*.html',
-		css: './css/**/*.sass',
-		js: './js/partials/*.js',
-		img: './images/**/*.*'
+		html: './src/html/**/*.html',
+		css: './src/css/**/*.sass',
+		js: './src/js/**/*.js',
+		img: './src/images/**/*.*'
 	}
-}
+};
 
 
 const serverConfig = {
 	server: {
 		baseDir: "./build"
 	},
-	tunnel: true,
+	tunnel: false,
 	host: 'localhost',
 	port: 9000,
 	logPrefix: "gulp_project"
@@ -49,8 +49,8 @@ const serverConfig = {
 
 
 //Tasks
-gulp.task('MakeHTMLGreatAgain', () => {
-	gulp.src(path.src.html)
+gulp.task('MakeHtmlGreatAgain', () => {
+	return gulp.src(path.src.html)
 		.pipe(rigger())
 		.pipe(gulp.dest(path.build.html))
 		.pipe(reload({
@@ -59,8 +59,8 @@ gulp.task('MakeHTMLGreatAgain', () => {
 });
 
 
-gulp.task('MakeCssGreatAgain', () => {
-	gulp.src(path.src.css)
+gulp.task('makeCssGreatAgain', () => {
+	return gulp.src(path.src.css)
 		.pipe(sass({
 			outputStyle: 'compressed'
 		})).on('error', sass.logError)
@@ -73,8 +73,8 @@ gulp.task('MakeCssGreatAgain', () => {
 });
 
 
-gulp.task('MakeJsGreatAgain', () => {
-	gulp.src(path.src.js)
+gulp.task('makeJsGreatAgain', () => {
+	return gulp.src(path.src.js)
 		.pipe(plumber())
 		.pipe(uglify())
 		.pipe(gulp.dest(path.build.js))
@@ -83,9 +83,9 @@ gulp.task('MakeJsGreatAgain', () => {
 		}));
 });
 
-gulp.task('MakeImgGreatAgain', () => {
-	gulp.src(path.src.img)
-	.pipe(imagemin({ 
+gulp.task('makeImgGreatAgain', () => {
+	return gulp.src(path.src.img)
+	.pipe(imagemin({
 		progressive: true,
 		svgoPlugins: [{removeViewBox: false}],
 		use: [pngquant()],
@@ -97,33 +97,24 @@ gulp.task('MakeImgGreatAgain', () => {
 	}));
 });
 
-gulp.task('MakeProjectGreatAgain', [
-	'MakeHTMLGreatAgain',
-	'MakeCssGreatAgain',
-	'MakeJsGreatAgain',
-	'MakeImgGreatAgain'
-]);
-
-
 gulp.task('watch', () => {
-	watch([path.watch.html], function(event, cb) {
-		gulp.start('MakeHTMLGreatAgain');
-	});
-	watch([path.watch.css], function(event, cb) {
-		gulp.start('MakeCssGreatAgain');
-	});
-	watch([path.watch.js], function(event, cb) {
-		gulp.start('MakeJsGreatAgain');
-	});
-	watch([path.watch.img], function(event, cb) {
-		gulp.start('MakeImgGreatAgain');
-	});
+	gulp.watch(path.watch.html, gulp.series('MakeHtmlGreatAgain'));
+	gulp.watch(path.watch.css, gulp.series('makeCssGreatAgain'));
+	gulp.watch(path.watch.js, gulp.series('makeJsGreatAgain'));
+	gulp.watch(path.watch.img, gulp.series('makeImgGreatAgain'));
 });
-
 
 gulp.task('webserver', () => {
 	browserSync(serverConfig);
 });
 
-
-gulp.task('default', ['MakeProjectGreatAgain', 'webserver', 'watch']);
+gulp.task('default', gulp.series(
+	gulp.parallel(
+		'MakeHtmlGreatAgain',
+		'makeCssGreatAgain',
+		'makeJsGreatAgain',
+		'makeImgGreatAgain',
+		'webserver',
+		'watch'
+	),
+));
