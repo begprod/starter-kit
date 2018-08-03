@@ -49,7 +49,7 @@ const serverConfig = {
 
 
 //Tasks
-gulp.task('MakeHtmlGreatAgain', () => {
+gulp.task('makeHtmlGreatAgain', () => {
 	return gulp.src(path.src.html)
 		.pipe(rigger())
 		.pipe(gulp.dest(path.build.html))
@@ -98,7 +98,7 @@ gulp.task('makeImgGreatAgain', () => {
 });
 
 gulp.task('watch', () => {
-	gulp.watch(path.watch.html, gulp.series('MakeHtmlGreatAgain'));
+	gulp.watch(path.watch.html, gulp.series('makeHtmlGreatAgain'));
 	gulp.watch(path.watch.css, gulp.series('makeCssGreatAgain'));
 	gulp.watch(path.watch.js, gulp.series('makeJsGreatAgain'));
 	gulp.watch(path.watch.img, gulp.series('makeImgGreatAgain'));
@@ -110,7 +110,7 @@ gulp.task('webserver', () => {
 
 gulp.task('default', gulp.series(
 	gulp.parallel(
-		'MakeHtmlGreatAgain',
+		'makeHtmlGreatAgain',
 		'makeCssGreatAgain',
 		'makeJsGreatAgain',
 		'makeImgGreatAgain',
