@@ -1,3 +1,5 @@
-$(document).ready(function(){
-	//= partials/script.js
-});
+const test = (name) => {
+	console.log(`Name: ${name}`);
+};
+
+test('Billy');

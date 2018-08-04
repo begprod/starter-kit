@@ -3,5 +3,5 @@
 ### Compiles and hot-reloads
 
 ```sh
-npm run build || gulp
+npm run start || gulp
 ```

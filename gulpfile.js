@@ -3,16 +3,15 @@ const gulp = require('gulp');
 const watch = require('gulp-watch');
 const sass = require('gulp-sass');
 const prefixer = require('gulp-autoprefixer');
-const uglify = require('gulp-uglify');
-const rigger = require('gulp-rigger');
 const csso = require('gulp-csso');
+const rigger = require('gulp-rigger');
 const plumber = require('gulp-plumber');
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
+const babel = require('gulp-babel');
 // Server
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
-
 
 //Project paths
 const path = {
@@ -25,7 +24,7 @@ const path = {
 	src: { // From
 		html: './src/html/*.html',
 		css: './src/css/style.sass',
-		js: './src/js/partials/*.js',
+		js: './src/js/*.js',
 		img: './src/images/**/*.*'
 	},
 	watch: { // Watching for changes
@@ -35,7 +34,6 @@ const path = {
 		img: './src/images/**/*.*'
 	}
 };
-
 
 const serverConfig = {
 	server: {
@@ -47,8 +45,7 @@ const serverConfig = {
 	logPrefix: "gulp_project"
 };
 
-
-//Tasks
+// Tasks
 gulp.task('makeHtmlGreatAgain', () => {
 	return gulp.src(path.src.html)
 		.pipe(rigger())
@@ -57,7 +54,6 @@ gulp.task('makeHtmlGreatAgain', () => {
 			stream: true
 		}));
 });
-
 
 gulp.task('makeCssGreatAgain', () => {
 	return gulp.src(path.src.css)
@@ -72,11 +68,12 @@ gulp.task('makeCssGreatAgain', () => {
 		}));
 });
 
-
 gulp.task('makeJsGreatAgain', () => {
 	return gulp.src(path.src.js)
 		.pipe(plumber())
-		.pipe(uglify())
+		.pipe(babel({
+			presets: ['env', 'minify']
+		}))
 		.pipe(gulp.dest(path.build.js))
 		.pipe(reload({
 			stream: true

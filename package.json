@@ -4,7 +4,7 @@
   "description": "Starter kit for simple projects",
   "main": "index.js",
   "scripts": {
-    "build": "gulp"
+    "start": "gulp"
   },
   "repository": {
     "type": "git",
@@ -17,15 +17,18 @@
   },
   "homepage": "https://github.com/begprod/Starter-Kit#readme",
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-minify": "^0.4.3",
+    "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.24.6",
     "gulp": "^4.0.0",
     "gulp-autoprefixer": "^4.1.0",
+    "gulp-babel": "^7.0.1",
     "gulp-csso": "^3.0.1",
     "gulp-imagemin": "^3.4.0",
     "gulp-plumber": "^1.2.0",
     "gulp-rigger": "^0.5.8",
     "gulp-sass": "^3.2.1",
-    "gulp-uglify": "^3.0.1",
     "gulp-watch": "^4.3.11",
     "imagemin-pngquant": "^5.1.0"
   }
