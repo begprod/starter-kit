@@ -1,20 +1,11 @@
-html
-	box-sizing: border-box
-
-*,
-*::after,
-*::before
-	box-sizing: inherit
-
-//Helpers
-//Clear flow
+// Clear float flow
 .clearfix
 	&::after
 		content: ''
 		display: table
 		clear: both
 
-//Hide only visually, but have it available for screenreaders
+// Hide only visually, but have it available for screenreaders
 .visuallyhidden
 	border: 0
 	clip: rect(0 0 0 0)
