@@ -5,15 +5,15 @@ const sass = require('gulp-sass');
 const prefixer = require('gulp-autoprefixer');
 const csso = require('gulp-csso');
 const rigger = require('gulp-rigger');
-const plumber = require('gulp-plumber');
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
-const babel = require('gulp-babel');
+const webpack = require('webpack');
+const webpackStream = require('webpack-stream');
 // Server
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
 
-//Project paths
+// Project paths
 const path = {
 	build: { // Where
 		html: './build',
@@ -24,7 +24,7 @@ const path = {
 	src: { // From
 		html: './src/html/*.html',
 		css: './src/css/style.sass',
-		js: './src/js/*.js',
+		js: './src/js/index.js',
 		img: './src/images/**/*.*'
 	},
 	watch: { // Watching for changes
@@ -70,9 +70,23 @@ gulp.task('makeCssGreatAgain', () => {
 
 gulp.task('makeJsGreatAgain', () => {
 	return gulp.src(path.src.js)
-		.pipe(plumber())
-		.pipe(babel({
-			presets: ['env', 'minify']
+		.pipe(webpackStream({
+			mode: 'production',
+			output: {
+				filename: 'bundle.js'
+			},
+			module: {
+				rules: [
+					{
+						test: /\.(js)$/,
+						exclude: /(node_modules)/,
+						loader: 'babel-loader',
+						query: {
+							presets: ['env']
+						}
+					}
+				]
+			}
 		}))
 		.pipe(gulp.dest(path.build.js))
 		.pipe(reload({
@@ -84,7 +98,9 @@ gulp.task('makeImgGreatAgain', () => {
 	return gulp.src(path.src.img)
 	.pipe(imagemin({
 		progressive: true,
-		svgoPlugins: [{removeViewBox: false}],
+		svgoPlugins: [{
+			removeViewBox: false
+		}],
 		use: [pngquant()],
 		interlaced: true
 	}))
