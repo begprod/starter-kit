@@ -1,7 +1,7 @@
 {
   "name": "starter-kit",
-  "version": "1.0.0",
-  "description": "Starter kit for simple projects",
+  "version": "1.5.0",
+  "description": "gulp 4 starter kit",
   "main": "index.js",
   "scripts": {
     "start": "gulp"
