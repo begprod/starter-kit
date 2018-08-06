@@ -1,10 +1,10 @@
 // Gulp Plugins
 const gulp = require('gulp');
 const watch = require('gulp-watch');
+const nunjucksRender = require('gulp-nunjucks-render');
 const sass = require('gulp-sass');
 const prefixer = require('gulp-autoprefixer');
 const csso = require('gulp-csso');
-const rigger = require('gulp-rigger');
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
 const webpack = require('webpack');
@@ -22,13 +22,13 @@ const path = {
 		img: './build/images'
 	},
 	src: { // From
-		html: './src/html/*.html',
+		html: './src/html/pages/**/*.+(html|nunjucks)',
 		css: './src/css/style.sass',
 		js: './src/js/index.js',
 		img: './src/images/**/*.*'
 	},
 	watch: { // Watching for changes
-		html: './src/html/**/*.html',
+		html: './src/html/**/*.+(html|nunjucks)',
 		css: './src/css/**/*.sass',
 		js: './src/js/**/*.js',
 		img: './src/images/**/*.*'
@@ -48,7 +48,9 @@ const serverConfig = {
 // Tasks
 gulp.task('makeHtmlGreatAgain', () => {
 	return gulp.src(path.src.html)
-		.pipe(rigger())
+		.pipe(nunjucksRender({
+			path: ['./src/html/templates']
+		}))
 		.pipe(gulp.dest(path.build.html))
 		.pipe(reload({
 			stream: true

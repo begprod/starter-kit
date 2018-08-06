@@ -1,0 +1,8 @@
+{% extends 'layout.nunjucks' %}
+
+{% block content %}
+	{% import 'macros/nav-macro.nunjucks' as nav %}
+	{{ nav.activeMenuLink('home') }}
+
+	{% include 'partials/header.nunjucks' %}
+{% endblock %}

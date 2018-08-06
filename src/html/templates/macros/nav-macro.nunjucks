@@ -1,0 +1,15 @@
+{% macro activeMenuLink(page="home") %}
+	<nav>
+		<ul>
+			<li>
+				<a class="{% if page == 'home' %} active {% endif %}" href="#">item1</a>
+			</li>
+			<li>
+				<a href="#">item2</a>
+			</li>
+			<li>
+				<a href="#">item3</a>
+			</li>
+		</ul>
+	</nav>
+{% endmacro %}

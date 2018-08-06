@@ -27,7 +27,7 @@
     "gulp-babel": "^7.0.1",
     "gulp-csso": "^3.0.1",
     "gulp-imagemin": "^3.4.0",
-    "gulp-rigger": "^0.5.8",
+    "gulp-nunjucks-render": "^2.2.2",
     "gulp-sass": "^3.2.1",
     "gulp-watch": "^4.3.11",
     "imagemin-pngquant": "^5.1.0",
