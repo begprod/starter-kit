@@ -7,6 +7,7 @@ const prefixer = require('gulp-autoprefixer');
 const csso = require('gulp-csso');
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
+const spritesmith = require('gulp.spritesmith');
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
 // Server
@@ -19,19 +20,23 @@ const path = {
 		html: './build',
 		css: './build/css',
 		js: './build/js',
-		img: './build/images'
+		img: './build/media/images',
+		sprites: './build/media/sprites'
 	},
 	src: { // From
 		html: './src/html/pages/**/*.+(html|nunjucks)',
+		nunjucks: './src/html/templates',
 		css: './src/css/style.sass',
 		js: './src/js/index.js',
-		img: './src/images/**/*.*'
+		img: './src/media/images/**/*.*',
+		sprites: './src/media/sprites/**/*.*'
 	},
 	watch: { // Watching for changes
 		html: './src/html/**/*.+(html|nunjucks)',
 		css: './src/css/**/*.sass',
 		js: './src/js/**/*.js',
-		img: './src/images/**/*.*'
+		img: './src/media/images/**/*.*',
+		sprites: './src/media/sprites/**/*.*'
 	}
 };
 
@@ -49,7 +54,7 @@ const serverConfig = {
 gulp.task('makeHtmlGreatAgain', () => {
 	return gulp.src(path.src.html)
 		.pipe(nunjucksRender({
-			path: ['./src/html/templates']
+			path: [path.src.nunjucks]
 		}))
 		.pipe(gulp.dest(path.build.html))
 		.pipe(reload({
@@ -98,18 +103,32 @@ gulp.task('makeJsGreatAgain', () => {
 
 gulp.task('makeImgGreatAgain', () => {
 	return gulp.src(path.src.img)
-	.pipe(imagemin({
-		progressive: true,
-		svgoPlugins: [{
-			removeViewBox: false
-		}],
-		use: [pngquant()],
-		interlaced: true
-	}))
-	.pipe(gulp.dest(path.build.img))
-	.pipe(reload({
-		stream: true
-	}));
+		.pipe(imagemin({
+			progressive: true,
+			svgoPlugins: [{
+				removeViewBox: false
+			}],
+			use: [pngquant()],
+			interlaced: true
+		}))
+		.pipe(gulp.dest(path.build.img))
+		.pipe(reload({
+			stream: true
+		}));
+});
+
+gulp.task('makeSpritesGreatAgain', () => {
+	const spriteData = gulp.src(path.src.sprites)
+		.pipe(spritesmith({
+			algorithm: 'binary-tree',
+			padding: 10,
+			imgName: 'sprites.png',
+			cssName: 'sprites.css'
+		}));
+	return spriteData.pipe(gulp.dest(path.build.sprites))
+		.pipe(reload({
+			stream: true
+		}));
 });
 
 gulp.task('watch', () => {
@@ -117,6 +136,7 @@ gulp.task('watch', () => {
 	gulp.watch(path.watch.css, gulp.series('makeCssGreatAgain'));
 	gulp.watch(path.watch.js, gulp.series('makeJsGreatAgain'));
 	gulp.watch(path.watch.img, gulp.series('makeImgGreatAgain'));
+	gulp.watch(path.watch.sprites, gulp.series('makeSpritesGreatAgain'));
 });
 
 gulp.task('webserver', () => {
@@ -124,12 +144,14 @@ gulp.task('webserver', () => {
 });
 
 gulp.task('default', gulp.series(
-	gulp.parallel(
+	gulp.series(
 		'makeHtmlGreatAgain',
 		'makeCssGreatAgain',
 		'makeJsGreatAgain',
 		'makeImgGreatAgain',
+	),
+	gulp.parallel(
 		'webserver',
 		'watch'
-	),
+	)
 ));

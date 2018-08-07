@@ -1,7 +1,7 @@
 {
   "name": "starter-kit",
-  "version": "1.5.0",
-  "description": "gulp 4 starter kit",
+  "version": "2.0.0",
+  "description": "gulp 4 starter kit. nunkucks, sass, webpack",
   "main": "index.js",
   "scripts": {
     "start": "gulp"
@@ -30,6 +30,7 @@
     "gulp-nunjucks-render": "^2.2.2",
     "gulp-sass": "^3.2.1",
     "gulp-watch": "^4.3.11",
+    "gulp.spritesmith": "^6.9.0",
     "imagemin-pngquant": "^5.1.0",
     "webpack": "^4.16.5",
     "webpack-stream": "^5.1.0"
