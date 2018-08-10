@@ -158,6 +158,7 @@ gulp.task('default', gulp.series(
 		'makeCssGreatAgain',
 		'makeJsGreatAgain',
 		'makeImgGreatAgain',
+		'makeSpritesGreatAgain',
 		'makeFontsGreatAgain'
 	),
 	gulp.parallel(
