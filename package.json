@@ -21,18 +21,18 @@
     "babel-loader": "^7.1.5",
     "babel-minify": "^0.4.3",
     "babel-preset-env": "^1.7.0",
-    "browser-sync": "^2.24.6",
-    "gulp": "^4.0.0",
+    "browser-sync": "^2.26.7",
+    "gulp": "^4.0.2",
     "gulp-autoprefixer": "^4.1.0",
     "gulp-babel": "^7.0.1",
     "gulp-csso": "^3.0.1",
     "gulp-imagemin": "^3.4.0",
-    "gulp-nunjucks-render": "^2.2.2",
+    "gulp-nunjucks-render": "^2.2.3",
     "gulp-sass": "^3.2.1",
     "gulp-watch": "^4.3.11",
-    "gulp.spritesmith": "^6.9.0",
+    "gulp.spritesmith": "^6.11.0",
     "imagemin-pngquant": "^5.1.0",
-    "webpack": "^4.16.5",
-    "webpack-stream": "^5.1.0"
+    "webpack": "^4.41.0",
+    "webpack-stream": "^5.2.1"
   }
 }
