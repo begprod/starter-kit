@@ -1,7 +1,7 @@
 {
   "name": "starter-kit",
   "version": "2.0.0",
-  "description": "gulp 4 starter kit. nunkucks, sass, webpack",
+  "description": "gulp 4 starter kit. nunjucks, sass, webpack",
   "main": "index.js",
   "scripts": {
     "start": "gulp"
