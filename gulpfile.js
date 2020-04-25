@@ -2,14 +2,18 @@
 const gulp = require('gulp');
 const watch = require('gulp-watch');
 const nunjucksRender = require('gulp-nunjucks-render');
-const sass = require('gulp-sass');
-const prefixer = require('gulp-autoprefixer');
-const csso = require('gulp-csso');
+const postcss = require('gulp-postcss');
+const postcssImport = require('postcss-import');
+const postcssNested = require('postcss-nested');
+const postcssCustomProperties = require('postcss-custom-properties');
+const postCssCustomMedia = require('postcss-custom-media');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
 const imagemin = require('gulp-imagemin');
 const pngquant = require('imagemin-pngquant');
-const spritesmith = require('gulp.spritesmith');
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
+
 // Server
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
@@ -20,25 +24,22 @@ const path = {
 		html: './build',
 		css: './build/css',
 		js: './build/js',
-		img: './build/media/images',
-		sprites: './build/media/sprites',
+		img: './build/images',
 		fonts: './build/fonts'
 	},
 	src: { // From
 		html: './src/html/pages/**/*.+(html|nunjucks)',
 		nunjucks: './src/html/templates',
-		css: './src/css/style.sass',
+		css: './src/css/style.css',
 		js: './src/js/index.js',
-		img: './src/media/images/**/*.*',
-		sprites: './src/media/sprites/**/*.*',
+		img: './src/images/**/*.*',
 		fonts: './src/fonts/**/*.*'
 	},
 	watch: { // Watching for changes
 		html: './src/html/**/*.+(html|nunjucks)',
-		css: './src/css/**/*.sass',
+		css: './src/css/**/*.css',
 		js: './src/js/**/*.js',
-		img: './src/media/images/**/*.*',
-		sprites: './src/media/sprites/**/*.*',
+		img: './src/images/**/*.*',
 		fonts: './src/fonts/**/*.*'
 	}
 };
@@ -66,12 +67,17 @@ gulp.task('makeHtmlGreatAgain', () => {
 });
 
 gulp.task('makeCssGreatAgain', () => {
+	const plugins = [
+		postcssImport,
+		postcssNested,
+		postcssCustomProperties,
+		postCssCustomMedia,
+		autoprefixer(),
+		cssnano
+	];
+
 	return gulp.src(path.src.css)
-		.pipe(sass({
-			outputStyle: 'compressed'
-		})).on('error', sass.logError)
-		.pipe(csso())
-		.pipe(prefixer())
+		.pipe(postcss(plugins))
 		.pipe(gulp.dest(path.build.css))
 		.pipe(reload({
 			stream: true
@@ -120,20 +126,6 @@ gulp.task('makeImgGreatAgain', () => {
 		}));
 });
 
-gulp.task('makeSpritesGreatAgain', () => {
-	const spriteData = gulp.src(path.src.sprites)
-		.pipe(spritesmith({
-			algorithm: 'binary-tree',
-			padding: 10,
-			imgName: 'sprites.png',
-			cssName: 'sprites.css'
-		}));
-	return spriteData.pipe(gulp.dest(path.build.sprites))
-		.pipe(reload({
-			stream: true
-		}));
-});
-
 gulp.task('makeFontsGreatAgain', () => {
 	return gulp.src(path.src.fonts)
 		.pipe(gulp.dest(path.build.fonts));
@@ -144,7 +136,6 @@ gulp.task('watch', () => {
 	gulp.watch(path.watch.css, gulp.series('makeCssGreatAgain'));
 	gulp.watch(path.watch.js, gulp.series('makeJsGreatAgain'));
 	gulp.watch(path.watch.img, gulp.series('makeImgGreatAgain'));
-	gulp.watch(path.watch.sprites, gulp.series('makeSpritesGreatAgain'));
 	gulp.watch(path.watch.fonts, gulp.series('makeFontsGreatAgain'));
 });
 
@@ -158,7 +149,6 @@ gulp.task('default', gulp.series(
 		'makeCssGreatAgain',
 		'makeJsGreatAgain',
 		'makeImgGreatAgain',
-		'makeSpritesGreatAgain',
 		'makeFontsGreatAgain'
 	),
 	gulp.parallel(

@@ -1,0 +1,7 @@
+:root {
+	--green: green;
+	--red: red;
+	--main-font: 'Rubik', Arial, sans-serif;
+}
+
+@custom-media --screen-md (max-width: 1024px);
