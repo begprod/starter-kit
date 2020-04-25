@@ -4,7 +4,8 @@
   "description": "gulp 4 starter kit. nunjucks, sass, webpack",
   "main": "index.js",
   "scripts": {
-    "start": "gulp"
+    "dev": "gulp dev",
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",

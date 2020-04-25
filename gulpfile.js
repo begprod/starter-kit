@@ -141,7 +141,7 @@ gulp.task('webserver', () => {
 	browserSync(serverConfig);
 });
 
-gulp.task('default', gulp.series(
+gulp.task('dev', gulp.series(
 	gulp.series(
 		'makeHtmlGreatAgain',
 		'makeCssGreatAgain',
@@ -153,4 +153,12 @@ gulp.task('default', gulp.series(
 		'webserver',
 		'watch'
 	)
+));
+
+gulp.task('build', gulp.series(
+	'makeHtmlGreatAgain',
+	'makeCssGreatAgain',
+	'makeJsGreatAgain',
+	'makeImgGreatAgain',
+	'makeFontsGreatAgain'
 ));
