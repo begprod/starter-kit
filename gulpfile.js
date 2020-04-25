@@ -1,6 +1,8 @@
 // Gulp Plugins
 const gulp = require('gulp');
 const watch = require('gulp-watch');
+const gulpif = require('gulp-if');
+const sourcemap = require('gulp-sourcemaps');
 const pug = require('gulp-pug');
 const postcss = require('gulp-postcss');
 const postcssImport = require('postcss-import');
@@ -17,6 +19,10 @@ const webpackStream = require('webpack-stream');
 // Server
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
+
+console.log(process.env.NODE_ENV);
+const env = process.env.NODE_ENV;
+console.log(env);
 
 // Project paths
 const path = {
@@ -75,7 +81,9 @@ gulp.task('makeCssGreatAgain', () => {
 	];
 
 	return gulp.src(path.src.css)
+		.pipe(gulpif(env === 'development', sourcemap.init()))
 		.pipe(postcss(plugins))
+		.pipe(gulpif(env === 'development', sourcemap.write()))
 		.pipe(gulp.dest(path.build.css))
 		.pipe(reload({
 			stream: true
@@ -85,7 +93,7 @@ gulp.task('makeCssGreatAgain', () => {
 gulp.task('makeJsGreatAgain', () => {
 	return gulp.src(path.src.js)
 		.pipe(webpackStream({
-			mode: 'production',
+			mode: env,
 			output: {
 				filename: 'bundle.js'
 			},
@@ -155,7 +163,7 @@ gulp.task('dev', gulp.series(
 	)
 ));
 
-gulp.task('build', gulp.series(
+gulp.task('prod', gulp.series(
 	'makeHtmlGreatAgain',
 	'makeCssGreatAgain',
 	'makeJsGreatAgain',

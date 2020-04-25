@@ -4,8 +4,8 @@
   "description": "gulp 4 starter kit. nunjucks, sass, webpack",
   "main": "index.js",
   "scripts": {
-    "dev": "gulp dev",
-    "build": "gulp build"
+    "dev": "cross-env NODE_ENV=development gulp dev",
+    "prod": "cross-env NODE_ENV=production gulp prod"
   },
   "repository": {
     "type": "git",
@@ -24,12 +24,15 @@
     "babel-minify": "^0.4.3",
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.26.7",
+    "cross-env": "^7.0.2",
     "cssnano": "^4.1.10",
     "gulp": "^4.0.2",
     "gulp-babel": "^7.0.1",
+    "gulp-if": "^3.0.0",
     "gulp-imagemin": "^3.4.0",
     "gulp-postcss": "^8.0.0",
     "gulp-pug": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.5",
     "gulp-watch": "^4.3.11",
     "imagemin-pngquant": "^5.1.0",
     "postcss-custom-media": "^7.0.8",
