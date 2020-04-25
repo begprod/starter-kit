@@ -1,7 +1,7 @@
 // Gulp Plugins
 const gulp = require('gulp');
 const watch = require('gulp-watch');
-const nunjucksRender = require('gulp-nunjucks-render');
+const pug = require('gulp-pug');
 const postcss = require('gulp-postcss');
 const postcssImport = require('postcss-import');
 const postcssNested = require('postcss-nested');
@@ -28,15 +28,14 @@ const path = {
 		fonts: './build/fonts'
 	},
 	src: { // From
-		html: './src/html/pages/**/*.+(html|nunjucks)',
-		nunjucks: './src/html/templates',
+		html: './src/html/pages/**/*.pug',
 		css: './src/css/style.css',
 		js: './src/js/index.js',
 		img: './src/images/**/*.*',
 		fonts: './src/fonts/**/*.*'
 	},
 	watch: { // Watching for changes
-		html: './src/html/**/*.+(html|nunjucks)',
+		html: './src/html/**/*.pug',
 		css: './src/css/**/*.css',
 		js: './src/js/**/*.js',
 		img: './src/images/**/*.*',
@@ -57,10 +56,9 @@ const serverConfig = {
 // Tasks
 gulp.task('makeHtmlGreatAgain', () => {
 	return gulp.src(path.src.html)
-		.pipe(nunjucksRender({
-			path: [path.src.nunjucks]
+		.pipe(pug({
+			verbose: true
 		}))
-		.pipe(gulp.dest(path.build.html))
 		.pipe(reload({
 			stream: true
 		}));
