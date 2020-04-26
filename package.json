@@ -1,7 +1,7 @@
 {
   "name": "starter-kit",
-  "version": "2.0.0",
-  "description": "gulp 4 starter kit. nunjucks, sass, webpack",
+  "version": "3.0.0",
+  "description": "starter kit (gulp 4 / pug / postcss / webpack)",
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development gulp dev",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/begprod/Starter-Kit.git"
+    "url": "git+https://github.com/begprod/starter-kit.git"
   },
   "author": "Andrey Aratov [web.andrew@yandex.ru]",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/begprod/Starter-Kit/issues"
+    "url": "https://github.com/begprod/starter-kit/issues"
   },
-  "homepage": "https://github.com/begprod/Starter-Kit#readme",
+  "homepage": "https://github.com/begprod/starter-kit#readme",
   "devDependencies": {
     "autoprefixer": "^9.7.6",
     "babel-core": "^6.26.3",
