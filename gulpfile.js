@@ -20,7 +20,6 @@ const reload = browserSync.reload;
 
 // Env variable
 const env = process.env.NODE_ENV;
-console.log(env);
 
 // Project paths
 const path = {
