@@ -1,7 +1,6 @@
-// Gulp Plugins
+// Plugins
 const gulp = require('gulp');
-const watch = require('gulp-watch');
-const gulpif = require('gulp-if');
+const gulpIf = require('gulp-if');
 const sourcemap = require('gulp-sourcemaps');
 const pug = require('gulp-pug');
 const postcss = require('gulp-postcss');
@@ -9,18 +8,17 @@ const postcssImport = require('postcss-import');
 const postcssNested = require('postcss-nested');
 const postcssCustomProperties = require('postcss-custom-properties');
 const postCssCustomMedia = require('postcss-custom-media');
-const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
-const imagemin = require('gulp-imagemin');
-const pngquant = require('imagemin-pngquant');
-const webpack = require('webpack');
+const autoPrefixer = require('autoprefixer');
+const cssNano = require('cssnano');
+const imageMin = require('gulp-imagemin');
+const pngQuant = require('imagemin-pngquant');
 const webpackStream = require('webpack-stream');
 
 // Server
 const browserSync = require('browser-sync');
 const reload = browserSync.reload;
 
-console.log(process.env.NODE_ENV);
+// Env variable
 const env = process.env.NODE_ENV;
 console.log(env);
 
@@ -65,6 +63,7 @@ gulp.task('makeHtmlGreatAgain', () => {
 		.pipe(pug({
 			verbose: true
 		}))
+		.pipe(gulp.dest(path.build.html))
 		.pipe(reload({
 			stream: true
 		}));
@@ -76,14 +75,14 @@ gulp.task('makeCssGreatAgain', () => {
 		postcssNested,
 		postcssCustomProperties,
 		postCssCustomMedia,
-		autoprefixer(),
-		cssnano
+		autoPrefixer(),
+		cssNano
 	];
 
 	return gulp.src(path.src.css)
-		.pipe(gulpif(env === 'development', sourcemap.init()))
+		.pipe(gulpIf(env === 'development', sourcemap.init()))
 		.pipe(postcss(plugins))
-		.pipe(gulpif(env === 'development', sourcemap.write()))
+		.pipe(gulpIf(env === 'development', sourcemap.write()))
 		.pipe(gulp.dest(path.build.css))
 		.pipe(reload({
 			stream: true
@@ -118,12 +117,12 @@ gulp.task('makeJsGreatAgain', () => {
 
 gulp.task('makeImgGreatAgain', () => {
 	return gulp.src(path.src.img)
-		.pipe(imagemin({
+		.pipe(imageMin({
 			progressive: true,
 			svgoPlugins: [{
 				removeViewBox: false
 			}],
-			use: [pngquant()],
+			use: [pngQuant()],
 			interlaced: true
 		}))
 		.pipe(gulp.dest(path.build.img))
@@ -145,7 +144,7 @@ gulp.task('watch', () => {
 	gulp.watch(path.watch.fonts, gulp.series('makeFontsGreatAgain'));
 });
 
-gulp.task('webserver', () => {
+gulp.task('webServer', () => {
 	browserSync(serverConfig);
 });
 
@@ -158,7 +157,7 @@ gulp.task('dev', gulp.series(
 		'makeFontsGreatAgain'
 	),
 	gulp.parallel(
-		'webserver',
+		'webServer',
 		'watch'
 	)
 ));
