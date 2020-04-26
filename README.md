@@ -1,11 +1,18 @@
-# Gulp 4 starter kit
-### Install dependencies
-```sh
+# Starter kit (gulp 4 / pug / postcss / webpack)
+
+## Install dependencies
+```bash
 npm install
 ```
 
-### Compiles and hot-reloads
+## Compiles / hot-reloads / sourcemaps
 
-```sh
-npm run start || gulp
+```bash
+npm run dev
+```
+
+## Production build
+
+```bash
+npm run prod
 ```
