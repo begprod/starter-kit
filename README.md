@@ -1,4 +1,4 @@
-# Starter kit (gulp 4 / pug / postcss / webpack)
+# Starter kit template (gulp 4 / pug / postcss / webpack)
 
 ## Install dependencies
 ```bash
