@@ -1,4 +1,5 @@
 // Plugins
+const pathNode = require('path');
 const gulp = require('gulp');
 const gulpIf = require('gulp-if');
 const sourcemap = require('gulp-sourcemaps');
@@ -71,9 +72,13 @@ gulp.task('makeHtmlGreatAgain', () => {
 gulp.task('makeCssGreatAgain', () => {
 	const plugins = [
 		postcssImport,
-		postcssNested,
-		postcssCustomProperties,
-		postCssCustomMedia,
+    postcssNested,
+    postcssCustomProperties({
+      importFrom: pathNode.join(__dirname, './src/css/core/theme/_theme.css'),
+    }),
+    postCssCustomMedia({
+      importFrom: pathNode.join(__dirname, './src/css/core/breakpoint/_breakpoint.css'),
+    }),
 		autoPrefixer(),
 		cssNano
 	];
@@ -101,7 +106,7 @@ gulp.task('makeJsGreatAgain', () => {
 						test: /\.(js)$/,
 						exclude: /(node_modules)/,
 						loader: 'babel-loader',
-						query: {
+            options: {
 							presets: ['env']
 						}
 					}

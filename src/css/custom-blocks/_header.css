@@ -1,10 +1,15 @@
 .test {
-	font-family: var(--main-font);
-	color: var(--red);
+  display: flex;
+  font-family: var(--main-font);
+  color: var(--color-base-project);
+
+  &__nested {
+    color: var(--color-base-path);
+  }
 }
 
 @media (--screen-md) {
-	.test {
-		color: fuchsia;
-	}
+  .test {
+    color: fuchsia;
+  }
 }
