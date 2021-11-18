@@ -1,0 +1,14 @@
+/* Default theme */
+:root {
+	--color-base-default: #000000; /* Base color for text, icons... */
+	--color-base-essential: #ffffff; /* Color for surfaces */
+	--color-base-project: #ffcc00; /* Color for accent states */
+	--color-base-phantom: #000000; /* Color for borders, overlays */
+	--color-base-path: #0077ff; /* Color for links */
+
+	--main-font: 'Rubik', Arial, sans-serif;
+}
+
+.theme_default {
+	--color-bg-brand: var(--color-base-project);
+}
